@@ -1,36 +1,66 @@
 #include <stdio.h>
-
-int main() {
-    
-    
-    char choice = '\0';
-    float fahrenheit = 0.0f;
-    float celsius = 0.0f;
-    
-    printf("Temperature Conversion Program\n");
-    printf("C. Celsius to Fahrenheit\n");
-    printf("F. Fahrenheit to Celsius\n");
-    printf("Is the temp in Celsius (C) or Fahrenheit (F)?: ");
-    scanf(" %c", &choice); 
-    
-    // Celsius conversion
-    if (choice == 'C' || choice == 'c') {
-        printf("Enter the temperature in Celsius: ");
-        scanf("%f", &celsius);
-        fahrenheit = (celsius * 9 / 5) + 32;
-        printf("Temperature in Fahrenheit: %.2f\n", fahrenheit);
-    } 
-    // Fahrenheit conversion
-    else if (choice == 'F' || choice == 'f') {
-        printf("Enter the temperature in Fahrenheit: ");
-        scanf("%f", &fahrenheit);
-        celsius = (fahrenheit - 32) * 5 / 9;
-        printf("Temperature in Celsius: %.2f\n", celsius);
-    } 
-   
-    else {
-        printf("Invalid choice! Please enter C or F.\n");
+#include <stdlib.h>
+#include <time.h>
+int getComputerChoice();
+int getUserChoice();
+void checkWinner(int userChoice, int computerChoice);
+int main() 
+{
+    srand(time(NULL));
+    printf("**** ROCK PAPER SCISSORS ****\n");
+    int userChoice = getUserChoice();
+    int computerChoice = getComputerChoice();
+    switch(userChoice){
+        case 1:
+            printf("You chose: Rock\n");
+            break;
+        case 2:
+            printf("You chose: Paper\n");
+            break;
+        case 3:
+            printf("You chose: Scissors\n");
+            break;
     }
 
+    switch(computerChoice){
+        case 1:
+            printf("Computer chose: Rock\n");
+            break;
+        case 2:
+            printf("Computer chose: Paper\n");
+            break;
+        case 3:
+            printf("Computer chose: Scissors\n");
+            break;
+    }
+    
+    checkWinner(userChoice, computerChoice);
     return 0;
+}
+int getComputerChoice(){
+   
+    return (rand() % 3) + 1;
+}
+int getUserChoice(){
+    int choice;
+    do{
+        printf("Enter your choice (1 = Rock, 2 = Paper, 3 = Scissors): ");
+        scanf("%d", &choice);
+    } while(choice < 1 || choice > 3);
+    
+    return choice;
+}
+
+void checkWinner(int userChoice, int computerChoice){
+    if(userChoice == computerChoice){
+        printf("It's a tie!\n");
+    }
+    else if((userChoice == 1 && computerChoice == 3) || 
+            (userChoice == 2 && computerChoice == 1) || 
+            (userChoice == 3 && computerChoice == 2)){
+        printf("YOU WIN!\n");
+    }
+    else{
+        printf("YOU LOSE!\n");
+    }
 }
